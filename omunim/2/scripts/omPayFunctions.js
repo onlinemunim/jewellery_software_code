@@ -446,6 +446,10 @@ function calcStockItemBalance() {
             var payTotalWeight1 = document.getElementById('sttr_nt_weight' + dc).value;
             var payTotalWeightType1 = document.getElementById('sttr_nt_weight_type' + dc).value;
             var payMetalRate1 = document.getElementById('sttr_metal_rate' + dc).value;
+            chkmetal = document.getElementById('sttr_metal_type' + dc).value;
+            if(chkmetal == 'Gold') {
+                payMetalRate1 = adjustMetalRate(payMetalRate1);
+            }
             var payMetalTunch1 = document.getElementById('sttr_purity' + dc).value;
             var metalWeight = (payTotalWeight1 * payMetalTunch1) / 100;
             var metalAvgRate = document.getElementById('PayMetal1AvgRate' + dc).value;
@@ -506,7 +510,13 @@ function calcStockItemBalance() {
         document.getElementById('gmWtInGm').value = parseFloat(1).toFixed(2);
         document.getElementById('gmWtInMg').value = parseFloat(1000 * 1).toFixed(2);
     }else{
-            if (metal_Rate_Int_Val_Length == 4 && (metalType == 'Gold' || metalType == 'GOLD' || metalType == 'gold')) {
+            // START CODE TO FIX GOLD RATE CALCULATION WHEN RATE < 20000 @AUTHOR:USER-REQUEST
+            // If metal rate is less than 20,000 and metal type is Gold, treat rate as price per 1 gram
+            if (metal_Rate_Int_Val < 20000 && (metalType == 'Gold' || metalType == 'GOLD' || metalType == 'gold')) {
+                document.getElementById('gmWtInKg').value = parseFloat(1000 * 1).toFixed(2);
+                document.getElementById('gmWtInGm').value = parseFloat(1).toFixed(2);
+                document.getElementById('gmWtInMg').value = parseFloat(1000 * 1).toFixed(2);
+            } else if (metal_Rate_Int_Val_Length == 4 && (metalType == 'Gold' || metalType == 'GOLD' || metalType == 'gold')) {
                 document.getElementById('gmWtInKg').value = parseFloat(1000 * 1).toFixed(2);
                 document.getElementById('gmWtInGm').value = parseFloat(1).toFixed(2);
                 document.getElementById('gmWtInMg').value = parseFloat(1000 * 1).toFixed(2);
@@ -529,7 +539,26 @@ function calcStockItemBalance() {
                     document.getElementById('srGmWtInGm').value = parseFloat(1000 * 1).toFixed(2);
                     document.getElementById('srGmWtInMg').value = parseFloat((1000 * 1000) * 1).toFixed(2);
                 }
-            } else if ((metal_Rate_Int_Val_Length == 2 || metal_Rate_Int_Val_Length == 4 || metal_Rate_Int_Val_Length == 3) &&
+            } else if ((metal_Rate_Int_Val_Length == 2 || metal_Rate_Int_Val_Length == 3) &&
+                    (metalType == 'Silver' || metalType == 'SILVER' || metalType == 'silver')) {
+                if (document.getElementById('silverMetalRateby10gm').value == 'yes') {
+                    document.getElementById('srGmWtInGm').value = parseFloat(10).toFixed(2);
+                    document.getElementById('srGmWtInKg').value = parseFloat(100 * 1).toFixed(2);
+                    document.getElementById('srGmWtInMg').value = parseFloat(10000 * 1).toFixed(2);
+                } else {
+                   if (metal_Rate_Int_Val > 500) {
+                        // Auto per 10 gm
+                        document.getElementById('srGmWtInGm').value = parseFloat(10).toFixed(2);
+                        document.getElementById('srGmWtInKg').value = parseFloat(100).toFixed(2);
+                        document.getElementById('srGmWtInMg').value = parseFloat(10000).toFixed(2);
+                    } else if (metal_Rate_Int_Val < 500){
+                        // Auto per 1 gm
+                        document.getElementById('srGmWtInGm').value = parseFloat(1).toFixed(2);
+                        document.getElementById('srGmWtInKg').value = parseFloat(1000).toFixed(2);
+                        document.getElementById('srGmWtInMg').value = parseFloat(1000).toFixed(2);
+                    }
+                }
+            } else if ((metal_Rate_Int_Val_Length == 4) &&
                     (metalType == 'Silver' || metalType == 'SILVER' || metalType == 'silver')) {
                 if (document.getElementById('silverMetalRateby10gm').value == 'yes') {
                     document.getElementById('srGmWtInGm').value = parseFloat(10).toFixed(2);
@@ -537,7 +566,7 @@ function calcStockItemBalance() {
                     document.getElementById('srGmWtInMg').value = parseFloat(10000 * 1).toFixed(2);
                 } else {
                     document.getElementById('srGmWtInKg').value = parseFloat(1000 * 1).toFixed(2);
-                    document.getElementById('srGmWtInGm').value = parseFloat(1).toFixed(2);
+                    document.getElementById('srGmWtInGm').value = parseFloat(10).toFixed(2);
                     document.getElementById('srGmWtInMg').value = parseFloat(1000 * 1).toFixed(2);
                     //END CODE TO ADD 10GM SILVER RATE@ RENUKA SHARMA 28/12/2022
                 }
@@ -561,8 +590,14 @@ function calcStockItemBalance() {
                     document.getElementById('sttr_valuation' + dc).value = ((goldWeight * payMetalRate1) * document.getElementById('gmWtInKg').value).toFixed(2);
                     metalValByAvgRate = ((goldWeight * metalAvgRate) * document.getElementById('gmWtInKg').value).toFixed(2);
                 } else if (payTotalWeightType1 == 'GM') {
-                    document.getElementById('sttr_valuation' + dc).value = ((goldWeight * payMetalRate1) / document.getElementById('gmWtInGm').value).toFixed(2);
-                    metalValByAvgRate = ((goldWeight * metalAvgRate) / document.getElementById('gmWtInGm').value).toFixed(2);
+
+                    // Calculation for sttr_valuation
+                    if (parseFloat(payMetalRate1) > 20000) {
+                        document.getElementById('sttr_valuation' + dc).value = ((goldWeight * payMetalRate1) / 10).toFixed(2);
+                    } else {
+                        document.getElementById('sttr_valuation' + dc).value = ((goldWeight * payMetalRate1) / document.getElementById('gmWtInGm').value).toFixed(2);
+                    }
+
                 } else if (payTotalWeightType1 == 'MG') {
                     document.getElementById('sttr_valuation' + dc).value = ((goldWeight * payMetalRate1) / document.getElementById('gmWtInMg').value).toFixed(2);
                     metalValByAvgRate = ((goldWeight * metalAvgRate) / document.getElementById('gmWtInMg').value).toFixed(2);
@@ -2612,12 +2647,27 @@ function calcRawMetStock(prefix) {
 
             var payMetalRate1 = document.getElementById(prefix + 'GoldRate').value;
 
+            var gmWtInKgVal = parseFloat(document.getElementById('gmWtInKg').value);
+            var gmWtInGmVal = parseFloat(document.getElementById('gmWtInGm').value);
+            var gmWtInMgVal = parseFloat(document.getElementById('gmWtInMg').value);
+
+            if (payTotalWeightType1 == 'GM' && parseFloat(payMetalRate1) < 20000) {
+                gmWtInGmVal = 1;
+            }
+
             if (payTotalWeightType1 == 'KG') {
-                document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) * document.getElementById('gmWtInKg').value)).toFixed(2);
+                document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) * gmWtInKgVal)).toFixed(2);
             } else if (payTotalWeightType1 == 'GM') {
-                document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) / (document.getElementById('gmWtInGm').value))).toFixed(2);
+                // document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) / gmWtInGmVal)).toFixed(2);
+
+                if (parseFloat(payMetalRate1) > 20000) {
+                    document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) / 10)).toFixed(2);
+                } else {
+                    document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) / gmWtInGmVal)).toFixed(2);
+                }
+           
             } else if (payTotalWeightType1 == 'MG') {
-                document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) / (document.getElementById('gmWtInMg').value))).toFixed(2);
+                document.getElementById(prefix + 'GoldValuation').value = Math_round(parseFloat((goldWeight * payMetalRate1) / gmWtInMgVal)).toFixed(2);
             }
 
             document.getElementById(prefix + 'PayGoldWtBal').value = parseFloat(goldWeight).toFixed(3);
@@ -9426,12 +9476,20 @@ function changeMetAmtCalcMetBal(prefix) {
         var goldWeightType = (document.getElementById(prefix + 'GoldRtCtWtBalType').value); // GOLD METAL RATE CUT TYPE
         var goldRate = parseFloat(document.getElementById(prefix + 'GoldRate').value).toFixed(2); // GOLD RATE
 
+        var gmWtInKgVal = parseFloat(document.getElementById('gmWtInKg').value);
+        var gmWtInGmVal = parseFloat(document.getElementById('gmWtInGm').value);
+        var gmWtInMgVal = parseFloat(document.getElementById('gmWtInMg').value);
+
+        if (goldWeightType == 'GM' && goldRate < 20000) {
+            gmWtInGmVal = 1;
+        }
+
         if (goldWeightType == 'KG') { // GOLD METAL RATE CUT TYPE
-            document.getElementById(prefix + 'GoldRtCtWtBal').value = ((goldValuation) / (goldRate * document.getElementById('gmWtInKg').value)).toFixed(3); // GOLD METAL RATE CUT
+            document.getElementById(prefix + 'GoldRtCtWtBal').value = ((goldValuation) / (goldRate * gmWtInKgVal)).toFixed(3); // GOLD METAL RATE CUT
         } else if (goldWeightType == 'GM') { // GOLD METAL RATE CUT TYPE
-            document.getElementById(prefix + 'GoldRtCtWtBal').value = ((document.getElementById('gmWtInGm').value * goldValuation) / (goldRate)).toFixed(3); // GOLD METAL RATE CUT            
+            document.getElementById(prefix + 'GoldRtCtWtBal').value = ((gmWtInGmVal * goldValuation) / (goldRate)).toFixed(3); // GOLD METAL RATE CUT            
         } else if (goldWeightType == 'MG') { // GOLD METAL RATE CUT TYPE
-            document.getElementById(prefix + 'GoldRtCtWtBal').value = ((document.getElementById('gmWtInMg').value * goldValuation) / (goldRate)).toFixed(3); // GOLD METAL RATE CUT
+            document.getElementById(prefix + 'GoldRtCtWtBal').value = ((gmWtInMgVal * goldValuation) / (goldRate)).toFixed(3); // GOLD METAL RATE CUT
         }
 
         document.getElementById(prefix + 'PayGoldWtBal').value = parseFloat(document.getElementById(prefix + 'GoldRtCtWtBal').value).toFixed(2); // GOLD WEIGHT BALANCE

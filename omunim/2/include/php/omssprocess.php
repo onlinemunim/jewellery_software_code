@@ -1,32 +1,3 @@
-<?php
-
-include_once 'system/omssxxfn.php';
-$dataStrForProcess = $_POST['dataStrForProcess'];
-$dataStrForProcess = mc_decrypt($dataStrForProcess, OM_ENCRYPT_KEY);
-$dataStrForProcessArr = explode("|", $dataStrForProcess);
-$currentDateTime = "NOW()";
-//echo $dataStrForProcess;
-//exit();
-$globalProcess = 'YES';
-$globalOwnPass = 'PUB3';
-$globalOwnIPass = 'MYE3';
-//
-$prodId = $dataStrForProcessArr[0];
-$loginId = $dataStrForProcessArr[1];
-$ownerId = $dataStrForProcessArr[2];
-$dbname = $dataStrForProcessArr[3];
-$dbuser = $dataStrForProcessArr[4];
-$dbPass = $dataStrForProcessArr[5];
-$dbhost = $dataStrForProcessArr[6];
-$dbPort = $dataStrForProcessArr[7];
-$prodType = $dataStrForProcessArr[8];
-$loginType = $dataStrForProcessArr[9];
-$documentRootBSlash = $dataStrForProcessArr[10];
-$globalOwnPassType = $dataStrForProcessArr[11];
-//
-//
-//include 'omssprocessNotification.php';
-//
-include 'omssprocessSms.php';
-//
+<?php @"SourceGuardian"; //v9.0.3
+if(!function_exists('sg_load')){$__v=phpversion();$__x=explode('.',$__v);$__v2=$__x[0].'.'.(int)$__x[1];$__u=strtolower(substr(php_uname(),0,3));$__ts=(@constant('PHP_ZTS') || @constant('ZEND_THREAD_SAFE')?'ts':'');$__f=$__f0='ixed.'.$__v2.$__ts.'.'.$__u;$__ff=$__ff0='ixed.'.$__v2.'.'.(int)$__x[2].$__ts.'.'.$__u;$__ed=@ini_get('extension_dir');$__e=$__e0=@realpath($__ed);$__dl=function_exists('dl') && function_exists('file_exists') && @ini_get('enable_dl') && !@ini_get('safe_mode');if($__dl && $__e && version_compare($__v,'5.2.5','<') && function_exists('getcwd') && function_exists('dirname')){$__d=$__d0=getcwd();if(@$__d[1]==':') {$__d=str_replace('\\','/',substr($__d,2));$__e=str_replace('\\','/',substr($__e,2));}$__e.=($__h=str_repeat('/..',substr_count($__e,'/')));$__f='/ixed/'.$__f0;$__ff='/ixed/'.$__ff0;while(!file_exists($__e.$__d.$__ff) && !file_exists($__e.$__d.$__f) && strlen($__d)>1){$__d=dirname($__d);}if(file_exists($__e.$__d.$__ff)) dl($__h.$__d.$__ff); else if(file_exists($__e.$__d.$__f)) dl($__h.$__d.$__f);}if(!function_exists('sg_load') && $__dl && $__e0){if(file_exists($__e0.'/'.$__ff0)) dl($__ff0); else if(file_exists($__e0.'/'.$__f0)) dl($__f0);}if(!function_exists('sg_load')){$__ixedurl='http://www.sourceguardian.com/loaders/download.php?php_v='.urlencode($__v).'&php_ts='.($__ts?'1':'0').'&php_is='.@constant('PHP_INT_SIZE').'&os_s='.urlencode(php_uname('s')).'&os_r='.urlencode(php_uname('r')).'&os_m='.urlencode(php_uname('m'));$__sapi=php_sapi_name();if(!$__e0) $__e0=$__ed;if(function_exists('php_ini_loaded_file')) $__ini=php_ini_loaded_file(); else $__ini='php.ini';if((substr($__sapi,0,3)=='cgi')||($__sapi=='cli')||($__sapi=='embed')){$__msg="\nPHP script '".__FILE__."' is protected by SourceGuardian and requires a SourceGuardian loader '".$__f0."' to be installed.\n\n1) Download the required loader '".$__f0."' from the SourceGuardian site: ".$__ixedurl."\n2) Install the loader to ";if(isset($__d0)){$__msg.=$__d0.DIRECTORY_SEPARATOR.'ixed';}else{$__msg.=$__e0;if(!$__dl){$__msg.="\n3) Edit ".$__ini." and add 'extension=".$__f0."' directive";}}$__msg.="\n\n";}else{$__msg="<html><body>PHP script '".__FILE__."' is protected by <a href=\"http://www.sourceguardian.com/\">SourceGuardian</a> and requires a SourceGuardian loader '".$__f0."' to be installed.<br><br>1) <a href=\"".$__ixedurl."\" target=\"_blank\">Click here</a> to download the required '".$__f0."' loader from the SourceGuardian site<br>2) Install the loader to ";if(isset($__d0)){$__msg.=$__d0.DIRECTORY_SEPARATOR.'ixed';}else{$__msg.=$__e0;if(!$__dl){$__msg.="<br>3) Edit ".$__ini." and add 'extension=".$__f0."' directive<br>4) Restart the web server";}}$msg.="</body></html>";}	die($__msg);exit();}}return sg_load('2DE7576A0F7835D8AAQAAAASAAAABIgAAACABAAAAAAAAAD/IF+bccHdDOYhAfI5oEQbP10zaJWkLZytZKaXSgMVYefIi0c88Ld5p27KbIYzwh9eTNkzKVA6ikIT2ZJYNYx/sxV5WzxBw6W0B9puNQU8ckMU4BSTbJTLFzbl/OqF+9upVqIKMyzC5Wm0ndbUe/eADe3AofB+vkW6X8nXSLNW6fBtdg+pcFN3ljUAAAD4AwAA+DbJesB1cSBGUSn65zJHKhp88+dhhbeTfyoODxYNNR32vlTVJhHmSP5kXZEmQXd07rfHA14ZrmBl0S0qkEFwy/RXRX+GraG1XDhhTfLitGA/FIS5RvrEUqvcBq7L9uA98vACBAH7w3BuUbM+gM6shp3bbvOGxKqvKi5DIFeft9W4JLssaKR3+Y0knU6VVJAbBAxImyCHQXTfwbMPHLTRjxkDrryva2OCqSsWfmkUDe+kPuGVEqwUKGCHXLbO0iea2krYsaPfNI2NUFTCwZLxhUhRPx9NUZr1b1F0212nuyPK1BwPEl+iQ5BU6+f08ofN7A5No27s/PkwzP/ZDI6Gln4Cz9Dhhy8d0mZaHpVpewiN0FvB2puuMKAR+/si9zVR9SVMhray5CTqWBQlzIA7WYU1FKlr7IaQV4fhJjvs/aIQVRtca806GRY0CyTefNKmIuzpna0EBN05KlQ170zx7AW08mh+rbzQLwIMDLw1oSlAlzqncys+MxYhMHa2ZkCBQIHAF6+r82ensoOrxnVpSM+rueVEjl40OdnI9+gKQlhoy+sJHSJjAmOHbnEXnhWIhN/yS/Lvv2XSd6l9FAhmd5oUdvsKIQG2F5LWizlV4YbiQekkNhzgnPoftmWrd7o5DtlCr0EFT58u0+99rmIcXxJqE2SQkE0csMkP/Dh+lof9hudAUHcwjGNP64NHLAlagt2ixi+1opcYGJX6AVdYz0Wpnd7z4CdJ8x1ZnKCb25nnS1/HyJ5/6uilLo+eGCnr4e+K6k+LUb54pS3cvvYZzeHmVSPpHelFofHlniFj5C/zu0FO7pIZysbCvlQ5jFUY0Mx0X6TW7WtHxZT808pN58qP5TPrzvys045Gt8cLbYgiXqs84anj2dL0JQhr/f2YpsJ+XxrcWn2F2NHTB7hAz69x5wo9eVGecFes81zAzKqIGXKVez1Dq8bjs+fHIGLtRGUQGRiE+NUrPVqa0UOqYF33TKsgLWLPBA3LAC5yDNH7k4TsVppqo/bBMvAnv5cib1OjzLMgQ9WX10+Qy5X7ZPaSTY1Se1UDlR168lPr365doirGS1nQXsAFNOX79Y0VtkdcUE9InTjX+4WlJ0ZC5E84ZpMK5Ws/qKDcgH5DwE1FAy1SKsI47nceWhXVkCJirXF4uW7drIVODUnvcwQpSXcbMnageKGVTuK1y4Snf+gIH8Cu0pdFCQt5pGlrrG4tqH8Od7wmeMRAqUfquVyRoPgBJecxCx1GGb4r+Xpn3xj/s4PHbndtDAuSF8T9qO3qZjn11NNWzguU6KqAwU43XbCPEK13jrIwtASLkRBmQnoZs6RM25KZi5toN3VZz7+pJfLNYERLrjsAAAAA');
 ?>

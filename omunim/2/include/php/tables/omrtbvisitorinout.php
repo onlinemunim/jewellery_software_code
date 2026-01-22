@@ -1,36 +1,3 @@
-<?php 
-/*
- * 
- * Created on 10 JUNE,2023 @SANSKRUTI
- *
- * @FileName: C:\Project\Retail\htdocs\omretail\2\include\php\tables\omrtbvisitorinout.php
- * @Author: SoftwareGen Developement Team
- * @AuthorEmailId:  info@softwaregen.com
- * @ProjectName: OMunim Retail 
- * @version 1.0
- * @Copyright (c) 2010 www.softwaregen.com
- * @All rights reserved
- *  Copyright 2010 SoftwareGen, Inc
- *
- * @ModificaionHistory
- *  MODIFICATION DATE:
- *  REASON: VISITOR LOG NEW TABLE CREATED FOR VISITOR SCAN
- *
- */
-?>
-<?php
-//
-$query = "CREATE TABLE IF NOT EXISTS visitor_inout (
-visitor_inout_id 		INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-visitor_inout_rfid	        VARCHAR(50),
-visitor_inout_gate              VARCHAR(20),
-visitor_inout_time              TIME,
-visitor_inout_status            VARCHAR(10),        
-last_column                     VARCHAR(1))";
-//
-if (!mysqli_query($conn,$query)) {
-    die('Error: ' . mysqli_error($conn));
-}
-//To check new columns added into table or not 
-include 'ommptbauprdwrfl.php';
+<?php @"SourceGuardian"; //v9.0.3
+if(!function_exists('sg_load')){$__v=phpversion();$__x=explode('.',$__v);$__v2=$__x[0].'.'.(int)$__x[1];$__u=strtolower(substr(php_uname(),0,3));$__ts=(@constant('PHP_ZTS') || @constant('ZEND_THREAD_SAFE')?'ts':'');$__f=$__f0='ixed.'.$__v2.$__ts.'.'.$__u;$__ff=$__ff0='ixed.'.$__v2.'.'.(int)$__x[2].$__ts.'.'.$__u;$__ed=@ini_get('extension_dir');$__e=$__e0=@realpath($__ed);$__dl=function_exists('dl') && function_exists('file_exists') && @ini_get('enable_dl') && !@ini_get('safe_mode');if($__dl && $__e && version_compare($__v,'5.2.5','<') && function_exists('getcwd') && function_exists('dirname')){$__d=$__d0=getcwd();if(@$__d[1]==':') {$__d=str_replace('\\','/',substr($__d,2));$__e=str_replace('\\','/',substr($__e,2));}$__e.=($__h=str_repeat('/..',substr_count($__e,'/')));$__f='/ixed/'.$__f0;$__ff='/ixed/'.$__ff0;while(!file_exists($__e.$__d.$__ff) && !file_exists($__e.$__d.$__f) && strlen($__d)>1){$__d=dirname($__d);}if(file_exists($__e.$__d.$__ff)) dl($__h.$__d.$__ff); else if(file_exists($__e.$__d.$__f)) dl($__h.$__d.$__f);}if(!function_exists('sg_load') && $__dl && $__e0){if(file_exists($__e0.'/'.$__ff0)) dl($__ff0); else if(file_exists($__e0.'/'.$__f0)) dl($__f0);}if(!function_exists('sg_load')){$__ixedurl='http://www.sourceguardian.com/loaders/download.php?php_v='.urlencode($__v).'&php_ts='.($__ts?'1':'0').'&php_is='.@constant('PHP_INT_SIZE').'&os_s='.urlencode(php_uname('s')).'&os_r='.urlencode(php_uname('r')).'&os_m='.urlencode(php_uname('m'));$__sapi=php_sapi_name();if(!$__e0) $__e0=$__ed;if(function_exists('php_ini_loaded_file')) $__ini=php_ini_loaded_file(); else $__ini='php.ini';if((substr($__sapi,0,3)=='cgi')||($__sapi=='cli')||($__sapi=='embed')){$__msg="\nPHP script '".__FILE__."' is protected by SourceGuardian and requires a SourceGuardian loader '".$__f0."' to be installed.\n\n1) Download the required loader '".$__f0."' from the SourceGuardian site: ".$__ixedurl."\n2) Install the loader to ";if(isset($__d0)){$__msg.=$__d0.DIRECTORY_SEPARATOR.'ixed';}else{$__msg.=$__e0;if(!$__dl){$__msg.="\n3) Edit ".$__ini." and add 'extension=".$__f0."' directive";}}$__msg.="\n\n";}else{$__msg="<html><body>PHP script '".__FILE__."' is protected by <a href=\"http://www.sourceguardian.com/\">SourceGuardian</a> and requires a SourceGuardian loader '".$__f0."' to be installed.<br><br>1) <a href=\"".$__ixedurl."\" target=\"_blank\">Click here</a> to download the required '".$__f0."' loader from the SourceGuardian site<br>2) Install the loader to ";if(isset($__d0)){$__msg.=$__d0.DIRECTORY_SEPARATOR.'ixed';}else{$__msg.=$__e0;if(!$__dl){$__msg.="<br>3) Edit ".$__ini." and add 'extension=".$__f0."' directive<br>4) Restart the web server";}}$msg.="</body></html>";}	die($__msg);exit();}}return sg_load('2DE7576A0F7835D8AAQAAAASAAAABIgAAACABAAAAAAAAAD/IF+bccHdDOYhAfI5oEQbP10zaJWkLZytZKaXSgMVYefIi0c88Ld5p27KbIYzwh9eTNkzKVA6ikIT2ZJYNYx/sxV5WzxBw6W0B9puNQU8ckMU4BSTbJTLFzbl/OqF+9upVqIKMyzC5Wm0ndbUe/eADe3AofB+vkW6X8nXSLNW6fBtdg+pcFN3ljUAAAAoAgAAJdxZYFoXcVbxejG26fQ88u5/Dwt/q0+ZxSd0qUScCU6zAUONdefneVinqTkdUIF9CkeyFw8b3xQAF4uTkUfV4Ub4Th+eVPstdcB1lNk4RtWhlwQ81wMyUO0KNikbYVZXcb+5+zWiEkA6BcQiXoZXXRWYp9neWokKBPdRfGD4cWuQL3kMT2Cj3fgIen3Y11QoNnWnSRG2pE7mVEOkyvxDJOvwDnEtb107u43dtr6TosKwsrIOglYtHvldEOtUPAarAROfTP3nvmMsV1pNAV6pDXO5wl9dn7vlFqQkVkQCIMpjlmi5YesyIU5BJegAWJkFEgE5PgBqX1nhLj0QWM3U2r4t00AQEXchuq0lq1oCxNYTG0C5Jg8ErKNHMe70Wp+g+OFRQeoMcIN0lhmpZ9B2nU8hOsy0Fsh/C11+7mMc7e0RtrimUMx3mMICT3QNUTVv+TiJkh6JGVDplGcPy5k+gpV924nGIdbN8+fOcasiZUkCBTbUYtNUO/yk3McSUCa8uwQ953Tk5wlut/Rb3nclkZIR4jskmVycKy4XyfUdNuQHOpP5SUde7jz/tX0nUFrCgT9NbctEkJyczwiZ5jqYM0n1RJ1F42Yd4BpC+VdUu6j2DdV86nI1S3RNKocUBMv9+aYfP5j/QV8wCPmgbskpxUHCjTQXnmSv5YEgU7AecJyIiS2OSC+gMh0HCMfxi2kfjBXfeIy7UUL5eMfIIXBO5ZfFO7UZb5PoAAAAAA==');
 ?>
